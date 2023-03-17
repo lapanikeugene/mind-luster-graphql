@@ -12,12 +12,12 @@ var books =[
 
 // GraphQLString - special string type for graphql
 // GraphQLObjectType - create schemas. 
-const {GraphQLObjectType,GraphQLString,GraphQLSchema} =graphQL;
+const {GraphQLObjectType,GraphQLString,GraphQLSchema,GraphQLID} =graphQL;
 
 const BookType = new GraphQLObjectType({
     name:'Book',
     fields: ()=>({
-        id:{type:GraphQLString},
+        id:{type:GraphQLID},
         name:{type:GraphQLString},
         genre:{type:GraphQLString},
     })
@@ -35,7 +35,7 @@ const RootsQuery = new GraphQLObjectType({
         book:{
             type:BookType,
             //what book does user need? Ask him about id of book.  
-            args:{id:{type:GraphQLString}},
+            args:{id:{type:GraphQLID}},
             resolve(parent,args){
                 // code to get data from db. 
             return  _.find(books,{id:args.id})

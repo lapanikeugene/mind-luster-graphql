@@ -5,7 +5,8 @@ const schema = require("./schema/schema");
 const app = express();
 
 app.use('/graphql',graphQLHTTP({
-schema
+schema,
+graphiql:true, // development tool
 }))
 
 

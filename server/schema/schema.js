@@ -5,9 +5,9 @@ const _ = require('lodash');
 
 //dummy data for tests
 var books =[
-    {name:"test 1",genre:'fantasy',id:1},
-    {name:"test 2",genre:'fantasy3',id:2},
-    {name:"test 3",genre:'fantasy3',id:3},
+    {name:"test 1",genre:'fantasy',id:"1"},
+    {name:"test 2",genre:'fantasy3',id:"2"},
+    {name:"test 3",genre:'fantasy3',id:"3"},
 ]
 
 // GraphQLString - special string type for graphql

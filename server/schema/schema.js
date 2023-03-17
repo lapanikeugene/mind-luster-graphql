@@ -8,6 +8,9 @@ var books =[
     {name:"test 1",genre:'fantasy',id:"1", authorid:'1'},
     {name:"test 2",genre:'fantasy3',id:"2",authorid:'2'},
     {name:"test 3",genre:'fantasy3',id:"3",authorid:'3'},
+    {name:"test 4",genre:'pulp fiction',id:"4", authorid:'2'},
+    {name:"test 5",genre:'sci fi',id:"5",authorid:'2'},
+    {name:"test 6",genre:'dramedy',id:"6",authorid:'3'},
 ]
 
 var authors=[
@@ -18,10 +21,13 @@ var authors=[
 
 // GraphQLString - special string type for graphql
 // GraphQLObjectType - create schemas. 
-const {GraphQLObjectType,GraphQLString,GraphQLSchema,GraphQLID,GraphQLInt} =graphQL;
+// GraphQLList array of types
+const {GraphQLObjectType,GraphQLString,GraphQLSchema,GraphQLID,GraphQLInt, GraphQLList} =graphQL;
 
 const BookType = new GraphQLObjectType({
     name:'Book',
+    // () => to avoit typeerror when types couldn't be 
+    //defined because one or another type is defined after the code
     fields: ()=>({
         id:{type:GraphQLID},
         name:{type:GraphQLString},
@@ -29,6 +35,7 @@ const BookType = new GraphQLObjectType({
         author:{
             type:AuthorType,
             resolve(parent,args){
+                //got id from parent node
                 return _.find(authors,{id:parent.authorid});
             }
         }
@@ -41,6 +48,15 @@ const AuthorType = new GraphQLObjectType({
         id:{type:GraphQLID},
         name:{type:GraphQLString},
         age:{type:GraphQLInt},
+        books:{
+            
+            type:new GraphQLList(BookType),
+            resolve(parent,args){
+                //filter is using to find several rows in db.
+                return _.filter(books,{authorid: parent.id})
+
+            }
+        }
     })
 });
 

@@ -5,14 +5,20 @@ const _ = require('lodash');
 
 //dummy data for tests
 var books =[
-    {name:"test 1",genre:'fantasy',id:"1"},
-    {name:"test 2",genre:'fantasy3',id:"2"},
-    {name:"test 3",genre:'fantasy3',id:"3"},
+    {name:"test 1",genre:'fantasy',id:"1", authorid:'1'},
+    {name:"test 2",genre:'fantasy3',id:"2",authorid:'2'},
+    {name:"test 3",genre:'fantasy3',id:"3",authorid:'3'},
+]
+
+var authors=[
+    {name:"author 1",age:36,id:'1'},
+    {name:"author 2",age:46,id:'2'},
+    {name:"author 3",age:56,id:'3'},
 ]
 
 // GraphQLString - special string type for graphql
 // GraphQLObjectType - create schemas. 
-const {GraphQLObjectType,GraphQLString,GraphQLSchema,GraphQLID} =graphQL;
+const {GraphQLObjectType,GraphQLString,GraphQLSchema,GraphQLID,GraphQLInt} =graphQL;
 
 const BookType = new GraphQLObjectType({
     name:'Book',
@@ -20,6 +26,21 @@ const BookType = new GraphQLObjectType({
         id:{type:GraphQLID},
         name:{type:GraphQLString},
         genre:{type:GraphQLString},
+        author:{
+            type:AuthorType,
+            resolve(parent,args){
+                return _.find(authors,{id:parent.authorid});
+            }
+        }
+    })
+});
+
+const AuthorType = new GraphQLObjectType({
+    name:'Author',
+    fields: ()=>({
+        id:{type:GraphQLID},
+        name:{type:GraphQLString},
+        age:{type:GraphQLInt},
     })
 });
 
@@ -39,6 +60,17 @@ const RootsQuery = new GraphQLObjectType({
             resolve(parent,args){
                 // code to get data from db. 
             return  _.find(books,{id:args.id})
+            }
+        },
+        author:{
+            type:AuthorType,
+            args:{
+                id:{type:GraphQLID},
+
+            },
+            resolve(parent,args){
+                return _.find(authors,{id:args.id})
+
             }
         }
     }

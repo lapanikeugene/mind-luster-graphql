@@ -1,5 +1,14 @@
-const graphQL = require('graphql');
+//for lodash you need npm i graphql@15.3.0
 
+const graphQL = require('graphql');
+const _ = require('lodash');
+
+//dummy data for tests
+var books =[
+    {name:"test 1",genre:'fantasy',id:1},
+    {name:"test 2",genre:'fantasy3',id:2},
+    {name:"test 3",genre:'fantasy3',id:3},
+]
 
 // GraphQLString - special string type for graphql
 // GraphQLObjectType - create schemas. 
@@ -29,7 +38,7 @@ const RootsQuery = new GraphQLObjectType({
             args:{id:{type:GraphQLString}},
             resolve(parent,args){
                 // code to get data from db. 
-
+            return  _.find(books,{id:args.id})
             }
         }
     }

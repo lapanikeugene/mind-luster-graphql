@@ -22,7 +22,6 @@ function App() {
       <ApolloProvider client={appoloClient} >
         <BookList />
         <AddBook />
-        <BookDetails />
       </ApolloProvider>
     </div>
   )

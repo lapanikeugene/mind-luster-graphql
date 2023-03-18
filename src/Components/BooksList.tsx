@@ -2,14 +2,8 @@ import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core"
 import { graphql } from "graphql"
 import useGetQuery from "../assets/GetQuery";
+import { getBookQuery } from "../Queries/queries";
 
-const getBookQuery = gql`
-    {
-        books{
-            name
-            id
-        }
-    }`
 
 interface books{
     name: string, 

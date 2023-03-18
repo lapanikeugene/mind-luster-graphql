@@ -1,11 +1,14 @@
 import { gql } from "@apollo/client/core"
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useGetQuery from "../assets/GetQuery"
 import { getAuthorsQuery } from "../Queries/queries";
 
 
 const AddBook = ()=>{
     const getAuthors = useGetQuery(getAuthorsQuery);
+    const bookNameRef = useRef<HTMLInputElement>(null);
+    const bookGenreRef = useRef<HTMLInputElement>(null);
+    const bookAuthorRef = useRef<HTMLSelectElement>(null);
 
     const handleSubmit = (e:React.FormEvent)=>{
         e.preventDefault();
@@ -21,15 +24,15 @@ const AddBook = ()=>{
     return(<form onSubmit={handleSubmit}>
                 <div className="field">
                     <label>Book name:</label>
-                    <input />
+                    <input ref={bookNameRef} />
                 </div>
                 <div className="field">
                     <label>Genre:</label>
-                    <input />
+                    <input ref={bookGenreRef} />
                 </div>
                 <div> 
                     Author:               
-                    <select>
+                    <select ref={bookAuthorRef}>
                     <option>Select Author</option>
                     {getAuthors ? <>
                         {(getAuthors?.authors as unknown as {name:string, id:string}[]).map((a,i)=>{

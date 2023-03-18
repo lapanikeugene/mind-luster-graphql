@@ -1,17 +1,24 @@
 import { gql } from "@apollo/client/core"
 import { useEffect, useRef } from "react";
 import useGetQuery from "../assets/GetQuery"
-import { getAuthorsQuery } from "../Queries/queries";
-
+import { addBookMutation, getAuthorsQuery } from "../Queries/queries";
+import {flowRight as compose} from 'lodash';
+import { useMutation } from "@apollo/client";
 
 const AddBook = ()=>{
     const getAuthors = useGetQuery(getAuthorsQuery);
+    const mutation = useMutation;
     const bookNameRef = useRef<HTMLInputElement>(null);
     const bookGenreRef = useRef<HTMLInputElement>(null);
     const bookAuthorRef = useRef<HTMLSelectElement>(null);
 
     const handleSubmit = (e:React.FormEvent)=>{
         e.preventDefault();
+        if(getAuthors?.authors.length>0)
+        mutation(addBookMutation,{
+
+        })
+        
     }
 
     useEffect(()=>{

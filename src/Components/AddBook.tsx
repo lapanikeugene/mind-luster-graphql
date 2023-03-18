@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client/core"
 import { useEffect, useRef } from "react";
 import useGetQuery from "../assets/GetQuery"
-import { addBookMutation, getAuthorsQuery } from "../Queries/queries";
+import { addBookMutation, getAuthorsQuery, getBookQuery } from "../Queries/queries";
 import {flowRight as compose} from 'lodash';
 import { useMutation } from "@apollo/client";
 
@@ -25,7 +25,11 @@ const AddBook = ()=>{
             name:bookNameRef.current?.value ||"",
             genre:bookGenreRef.current?.value||"",
             authorId:bookAuthorRef.current?.value||"",
-            }
+            },
+            //update data about books. 
+            refetchQueries:[
+                {query:getBookQuery}
+            ]
         })
         console.log("data:", data,error);
         

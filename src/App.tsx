@@ -6,6 +6,7 @@ import BookList from './Components/BooksList'
 import { ApolloClient } from '@apollo/client'
 import { InMemoryCache } from '@apollo/client/cache'
 import { ApolloProvider } from '@apollo/client/react'
+import AddBook from './Components/AddBook'
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
       <h1>GraphQL Course' tutorial</h1>
       <ApolloProvider client={appoloClient} >
         <BookList />
+        <AddBook />
       </ApolloProvider>
     </div>
   )

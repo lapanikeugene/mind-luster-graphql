@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core"
 import { graphql } from "graphql"
+import useGetQuery from "../assets/GetQuery";
 
 const getBookQuery = gql`
     {
@@ -15,14 +16,12 @@ interface books{
     id: string,
 }
 const BookList = ()=>{
-    const {loading, error, data} = useQuery(getBookQuery);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error </p>;
-    console.log(data);
+    const bookData = useGetQuery(getBookQuery);
+   
 
     return (<>
     <ul id="book-list">
-      {data ? <>{(data.books as unknown  as books[])?.map((a,i)=>{
+      {bookData ? <>{(bookData.books as unknown  as books[])?.map((a,i)=>{
         return<>
         <li key={a.id}>
             {a.name}

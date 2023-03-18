@@ -7,17 +7,27 @@ import { useMutation } from "@apollo/client";
 
 const AddBook = ()=>{
     const getAuthors = useGetQuery(getAuthorsQuery);
-    const mutation = useMutation;
+    const [mutation,{ loading, error, data}] = useMutation(addBookMutation);
     const bookNameRef = useRef<HTMLInputElement>(null);
     const bookGenreRef = useRef<HTMLInputElement>(null);
     const bookAuthorRef = useRef<HTMLSelectElement>(null);
 
-    const handleSubmit = (e:React.FormEvent)=>{
+    const handleSubmit = async(e:React.FormEvent)=>{
         e.preventDefault();
+        console.log({
+            name:bookNameRef.current?.value ||"",
+            genre:bookGenreRef.current?.value||"",
+            authorid:bookAuthorRef.current?.value||"",
+            });
         if(getAuthors?.authors.length>0)
-        mutation(addBookMutation,{
-
+        await mutation({
+            variables:{
+            name:bookNameRef.current?.value ||"",
+            genre:bookGenreRef.current?.value||"",
+            authorId:bookAuthorRef.current?.value||"",
+            }
         })
+        console.log("data:", data,error);
         
     }
 

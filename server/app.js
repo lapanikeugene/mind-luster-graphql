@@ -13,6 +13,7 @@ mongoose.connection.once('open',()=>{
     console.log('connected to db');
 });
 
+// fight cors error. 
 app.use(cors({
     credentials:true,
     origin:true

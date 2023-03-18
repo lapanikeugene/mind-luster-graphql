@@ -10,6 +10,10 @@ const getBookQuery = gql`
         }
     }`
 
+interface books{
+    name: string, 
+    id: string,
+}
 const BookList = ()=>{
     const {loading, error, data} = useQuery(getBookQuery);
     if (loading) return <p>Loading...</p>;
@@ -18,9 +22,16 @@ const BookList = ()=>{
 
     return (<>
     <ul id="book-list">
-        <li>
-            Book Name
+      {data ? <>{(data.books as unknown  as books[])?.map((a,i)=>{
+        return<>
+        <li key={a.id}>
+            {a.name}
         </li>
+        </>
+      })}</> :
+      <>
+      Loading...
+      </>}
     </ul>
     </>)
 }

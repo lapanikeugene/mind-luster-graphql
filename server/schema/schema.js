@@ -38,6 +38,7 @@ const BookType = new GraphQLObjectType({
             resolve(parent,args){
                 //got id from parent node
                 // return _.find(authors,{id:parent.authorid});
+                return Author.findById(parent.authorid)
             }
         }
     })
@@ -55,6 +56,7 @@ const AuthorType = new GraphQLObjectType({
             resolve(parent,args){
                 //filter is using to find several rows in db.
                 // return _.filter(books,{authorid: parent.id})
+                return Book.find({authorid: parent.id})
 
             }
         }
@@ -77,6 +79,9 @@ const RootsQuery = new GraphQLObjectType({
             resolve(parent,args){
                 // code to get data from db. 
             // return  _.find(books,{id:args.id})
+            // return Author.findById(parent.authorid)
+            return Book.findById(args.id);
+            
             }
         },
         author:{
@@ -87,6 +92,7 @@ const RootsQuery = new GraphQLObjectType({
             },
             resolve(parent,args){
                 // return _.find(authors,{id:args.id})
+                return Author.findById(args.id);
 
             }
         },
@@ -94,17 +100,21 @@ const RootsQuery = new GraphQLObjectType({
             type:new GraphQLList(BookType),
             resolve(parent,args){
                 // return books;
+                return Book.find({});
             } 
         },
         authors:{
             type:new GraphQLList(AuthorType),
             resolve(parent,args){
                 // return authors;
+                return Author.find({});
             } 
         }
     }
 })
 
+
+// add data to db. 
 const mutations = new GraphQLObjectType({
     name:'mutation',
     fields:{

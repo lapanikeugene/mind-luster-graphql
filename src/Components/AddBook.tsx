@@ -1,22 +1,7 @@
 import { gql } from "@apollo/client/core"
 import { useEffect } from "react";
 import useGetQuery from "../assets/GetQuery"
-
-// const addBookQuery= gql`
-
-
-// `
-
-const getAuthorsQuery= gql`
-    {
-        authors{
-            name
-            id
-        }
-    }
-
-`
-
+import { getAuthorsQuery } from "../Queries/queries";
 
 
 const AddBook = ()=>{

@@ -12,8 +12,8 @@ const useGetQuery = (query:DocumentNode)=>{
 
     useEffect(()=>{
 
-        if (loading) return console.log("Loading...");
-        if (error) return console.log("Error, ",error);
+        if (loading)  console.log("Loading...");
+        if (error)  console.log("Error, ",error);
     },[loading,error])
 
     useEffect(()=>{

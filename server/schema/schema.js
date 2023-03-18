@@ -23,7 +23,13 @@ const Author = require('../models/author');
 // GraphQLString - special string type for graphql
 // GraphQLObjectType - create schemas. 
 // GraphQLList array of types
-const {GraphQLObjectType,GraphQLString,GraphQLSchema,GraphQLID,GraphQLInt, GraphQLList} =graphQL;
+const {GraphQLObjectType,
+    GraphQLString,
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLInt, 
+    GraphQLList,
+    GraphQLNonNull} =graphQL;
 
 const BookType = new GraphQLObjectType({
     name:'Book',
@@ -31,8 +37,8 @@ const BookType = new GraphQLObjectType({
     //defined because one or another type is defined after the code
     fields: ()=>({
         id:{type:GraphQLID},
-        name:{type:GraphQLString},
-        genre:{type:GraphQLString},
+        name:{type:new GraphQLNonNull( GraphQLString)},
+        genre:{type:new GraphQLNonNull(GraphQLString)},
         author:{
             type:AuthorType,
             resolve(parent,args){
@@ -47,9 +53,9 @@ const BookType = new GraphQLObjectType({
 const AuthorType = new GraphQLObjectType({
     name:'Author',
     fields: ()=>({
-        id:{type:GraphQLID},
-        name:{type:GraphQLString},
-        age:{type:GraphQLInt},
+        id:{type:new GraphQLNonNull(GraphQLID)},
+        name:{type:new GraphQLNonNull(GraphQLString)},
+        age:{type:new GraphQLNonNull(GraphQLInt)},
         books:{
             
             type:new GraphQLList(BookType),
@@ -121,8 +127,8 @@ const mutations = new GraphQLObjectType({
         addAuthor:{
             type:AuthorType,
             args:{
-                name:{type:GraphQLString},
-                age: {type:GraphQLInt}
+                name:{type:new GraphQLNonNull(GraphQLString)},
+                age: {type:new GraphQLNonNull(GraphQLInt)}
             },
             resolve(parent,args){
                 let author = new Author({
@@ -137,9 +143,9 @@ const mutations = new GraphQLObjectType({
         addBook:{
             type:BookType,
             args:{
-                name:       {type:GraphQLString},
-                genre:      {type:GraphQLString},
-                authorId:   {type:GraphQLID},
+                name:       {type:new GraphQLNonNull(GraphQLString)},
+                genre:      {type:new GraphQLNonNull(GraphQLString)},
+                authorId:   {type:new GraphQLNonNull(GraphQLID)},
 
 
             },
